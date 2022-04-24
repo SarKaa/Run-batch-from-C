@@ -21,14 +21,12 @@ every argument after the first is passed at one higher than their number
 
 EG.
 
-when you type "c:\batch.exe I like to code" into the prompt:
+when you type "c:\batch.exe big black chickens" into the prompt:
 
 %1 = c:\batch.exe
 
-%2 = I
+%2 = big
 
-%3 = like
+%3 = black
 
-%4 = to
-
-%5 = code
+%4 = chickens
