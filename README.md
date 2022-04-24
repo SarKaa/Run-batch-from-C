@@ -10,6 +10,7 @@ But wait, I missed the main bit, as you're just saving the batch as a text-based
 If you have a choice, I would still recommend writing your app in an actual programming language, as it's just not good practice to write apps like this.
 
 ## INSTRUCTIONS: 
+Pretty simple really, and once you've done this, you won't need to do it ever again. Just edit the batch as if you're coding an app in it ;)
 
 Replace batch.bat, icon.ico and batch.manifest with the right files
 
@@ -20,6 +21,8 @@ Use mingw to compile (cygwin works for compilation but not cleaning)
 
 ## ARGUMENTS:
 
+If your app uses arguments that are passed to the batch, this code makes it easy for you to do this:
+
 argv[0] (executable name) is passed as %1
 
 argv[1] (first argument) is passed as %2
@@ -29,12 +32,16 @@ Every argument after the first is passed at one higher than their number (I.E. t
 
 EG.
 
-when you type "c:\batch.exe big black chickens" into the prompt:
+when you type "c:\batch.exe I like big black chickens" into the prompt:
 
 %1 = c:\batch.exe
 
-%2 = big
+%2 = I
 
-%3 = black
+%3 = like
 
-%4 = chickens
+%4 = big
+
+%5 = black
+
+%6 = chickens
