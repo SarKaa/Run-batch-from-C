@@ -32,7 +32,7 @@ Every argument after the first is passed at one higher than their number (I.E. t
 
 EG.
 
-when you type "c:\batch.exe I like big black chickens" into the prompt:
+when you type ```c:\batch.exe I like big black chickens``` into the prompt:
 
 %1 = c:\batch.exe
 
