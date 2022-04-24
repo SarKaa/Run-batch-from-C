@@ -1,4 +1,4 @@
-# c-wrapper-for-batch
+# Run batch file from C code
 A c template for running batch files
 
 So you've probably used the windows command prompt, and experienced the power it gives you. You might have come across various batch files that enable you to do so many cool thing. And I bet you've come across several shady batch to exe "converters". I have an easier way.
