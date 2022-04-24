@@ -1,11 +1,13 @@
 # Run batch file from C code
 A c template for running batch files
 
-So you've probably used the windows command prompt, and experienced the power it gives you. You might have come across various batch files that enable you to do so many cool thing. And I bet you've come across several shady batch to exe "converters". I have an easier way.
+So you've probably used the windows command prompt, and experienced the power it gives you. You might have come across various batch files that enable you to do so many cool thing. And I bet you've come across several shady batch to exe "converters". I have an easier way. Well actually it needs a bit more work at first, but the end product is much more efficient and quick
 
 This C template saves the batch file as a resource within the app, which is extracted to the temp directory, where it is hidden. This file is deleted after closing the app. The control-c escape sequence is also disabled, which means you won't get that annoying "terminate batch job" text.
 
 But wait, I missed the main bit, as you're just saving the batch as a text-based resource, it doesn't register as a threat and you don't get the windows defender alerts from it, unlike almost every other batch to exe convertor.
+
+If you have a choice, I would still recommend writing your app in an actual programming language, as it's just not good practice to write apps like this.
 
 ## INSTRUCTIONS: 
 
