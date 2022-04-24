@@ -45,3 +45,5 @@ when you type ```c:\batch.exe I like big black chickens``` into the prompt:
 %5 = black
 
 %6 = chickens
+
+NOTE: %1 will be whatever you type into the prompt, so if you type ```c:\batch.exe```, %1 will be ```c:\batch.exe```. If you type ```batch.exe```, %1 will be ```batch.exe```, and finally, if you type ```batch```, %1 will be, you guessed it, ```batch```
