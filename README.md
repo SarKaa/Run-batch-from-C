@@ -18,7 +18,7 @@ Step 2: Replace the version info in batch.rc with the right info
 
 Step 3: Use mingw to compile (cygwin works for compilation but not cleaning)
 
-Step 4: Tell me how it goes on [my discord server] (https://discord.gg/VDUFB3gpeQ)
+Step 4: Tell me how it goes on [my discord server](https://discord.gg/VDUFB3gpeQ)
 
 
 ## ARGUMENTS:
