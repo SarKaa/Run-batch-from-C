@@ -1,7 +1,7 @@
 # c-wrapper-for-batch
 A c template for running batch files
 
-##INSTRUCTIONS: 
+## INSTRUCTIONS: 
 
 Replace batch.bat, icon.ico and batch.manifest with the right files
 
@@ -10,7 +10,7 @@ Replace the version info in batch.rc with the right info
 Use mingw or cygwin to compile
 
 
-##ARGUMENTS:
+## ARGUMENTS:
 
 argv[0] (executable name) is passed as %1
 
