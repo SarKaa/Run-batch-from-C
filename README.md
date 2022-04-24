@@ -13,7 +13,7 @@ Replace batch.bat, icon.ico and batch.manifest with the right files
 
 Replace the version info in batch.rc with the right info
 
-Use mingw to compile (I haven't tried it with cygwin yet)
+Use mingw to compile (cygwin works for compilation but not cleaning)
 
 
 ## ARGUMENTS:
