@@ -63,6 +63,8 @@ void makebatch() {
     err = 1;
     }
   CloseHandle(batchhandle);
+  // Just in case it doesn't get deleted, it is marked to delete after a reboot
+  MoveFileExA(temp, NULL, MOVEFILE_DELAY_UNTIL_REBOOT);
 }
 
 int runbatch() {
