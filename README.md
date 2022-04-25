@@ -36,16 +36,23 @@ EG.
 
 when you type ```c:\batch.exe I like big black chickens``` into the prompt:
 
-%1 = "c:\batch.exe"
+```%1``` = ```"c:\batch.exe"```
 
-%2 = I
+```%2``` = ```I```
 
-%3 = like
+```%3``` = ```like```
 
-%4 = big
+```%4``` = ```big```
 
-%5 = black
+```%5``` = ```black```
 
-%6 = chickens
+```%6``` = ```chickens```
 
 NOTE: %1 will be whatever you type into the prompt, so if you type ```c:\batch.exe```, %1 will be ```"c:\batch.exe"```. If you type ```batch.exe```, %1 will be ```"batch.exe"```, and finally, if you type ```batch```, %1 will be, you guessed it, ```"batch"```
+
+## Extra Tips
+If you want to add a manifest to your app, add the line ```CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST batch.manifest``` to batch.rc, and save your ```batch.manifest``` file in the same directory
+
+If you want to save all variables except the executable name to one argument, add this line to your batch file: ```for /f "tokens=1,* delims= " %%a in ("%*") do set "args=%%b"```. This will save all variables to one ```%arg%``` variable
+
+If you only want the executable name instead of the file path, add the lines ```for %%F in (%1) do set exename=%%~nxF``` and ```if not "%exename:~-4%"==".exe" set "exename=%exename%.exe"``` to your batch file. This will ensure that even if you type ```C:\batch.exe```, ```batch.exe``` or ```batch```, ```%exename%``` will always be ```batch.exe```. This will also remove the "quotation marks".
