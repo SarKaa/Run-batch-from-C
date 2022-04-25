@@ -3,7 +3,7 @@ batch.exe:  batch.o batch.res
 	g++ batch.o batch.res -o batch.exe
 
 # Where all the magic happens
-batch.res:  batch.rc icon.ico batch.bat Makefile batch.manifest
+batch.res:  batch.rc icon.ico batch.bat Makefile
 	windres batch.rc -O coff -o batch.res
 
 # Deletes all compiled files, NOTE: This bit doesn't work with cygwin

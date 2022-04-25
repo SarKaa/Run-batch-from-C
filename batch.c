@@ -15,6 +15,8 @@ void clean()
   // Delete extracted batch file, reset console colours and free dynamically allocated memory
   remove(temp);
   SetConsoleTextAttribute(hConsole, consoleInfo.wAttributes);
+  // If deleting the batch file didn't work the first time, we can mark it to be deleted after a reboot
+  if (GetFileAttributes(temp) != INVALID_FILE_ATTRIBUTES) MoveFileExA(temp, NULL, MOVEFILE_DELAY_UNTIL_REBOOT);
   free(temp);
 } 
 
@@ -63,8 +65,6 @@ void makebatch() {
     err = 1;
     }
   CloseHandle(batchhandle);
-  // Just in case it doesn't get deleted, it is marked to delete after a reboot
-  MoveFileExA(temp, NULL, MOVEFILE_DELAY_UNTIL_REBOOT);
 }
 
 int runbatch() {
