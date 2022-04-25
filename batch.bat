@@ -1,3 +1,3 @@
 @echo off
-echo hello world
+echo You typed "%*"
 exit /b

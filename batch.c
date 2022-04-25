@@ -115,7 +115,6 @@ int main(int argc,char* argv[])
     sprintf(batch, "%s \"%s\" %s", temp, argv[0], args);
     free(args);
     batch = (char*)realloc(batch, strlen(batch) + 1);
-    SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN);
   } else {
     batch = (char*)malloc(strlen(temp) + strlen(argv[0]) + 20);
     // Generate final command to pass to CreateProcess
