@@ -7,7 +7,7 @@ This C template saves the batch file as a resource within the app, which is extr
 
 But wait, I missed the main bit: as you're just saving the batch as a text-based resource, it doesn't register as a threat and you don't get the windows defender alerts from it, unlike almost every other batch to exe convertor.
 
-If you have a choice, I would still recommend writing your app in an actual programming language, as it's just not good practice to write apps like this.
+If you have a choice, I would still recommend writing your app in an actual programming language, as it's just not pracrical or good practice to write apps like this.
 
 ## INSTRUCTIONS: 
 Pretty simple really, and once you've done this, you won't need to do it ever again. Just edit the batch as if you're coding an app in it ;)
