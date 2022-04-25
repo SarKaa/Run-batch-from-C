@@ -51,6 +51,8 @@ when you type ```c:\batch.exe I like big black chickens``` into the prompt:
 NOTE: %1 will be whatever you type into the prompt, so if you type ```c:\batch.exe```, %1 will be ```"c:\batch.exe"```. If you type ```batch.exe```, %1 will be ```"batch.exe"```, and finally, if you type ```batch```, %1 will be, you guessed it, ```"batch"```
 
 ## Extra Tips
+Here's a selection of tips and tricks to use in your batch/c app
+
 If you want to add a manifest to your app, add the line ```CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST batch.manifest``` to batch.rc, and save your ```batch.manifest``` file in the same directory
 
 If you want to save all variables except the executable name to one argument, add this line to your batch file: ```for /f "tokens=1,* delims= " %%a in ("%*") do set "args=%%b"```. This will save all variables to one ```%arg%``` variable
