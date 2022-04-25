@@ -12,7 +12,7 @@ If you have a choice, I would still recommend writing your app in an actual prog
 ## INSTRUCTIONS: 
 Pretty simple really, and once you've done this, you won't need to do it ever again. Just edit the batch as if you're coding an app in it ;)
 
-Step 1: Replace batch.bat, icon.ico and batch.manifest with the right files
+Step 1: Replace batch.bat and icon.ico with the right files
 
 Step 2: Replace the version info in batch.rc with the right info
 
