@@ -14,7 +14,6 @@ FILEVERSION        VERSION
 PRODUCTVERSION     VERSION
 FILEOS             VOS_NT_WINDOWS32
 FILETYPE           VFT_APP
-FILEFLAGS          VS_FF_PRERELEASE
 BEGIN
   BLOCK "StringFileInfo"
   BEGIN
@@ -29,9 +28,5 @@ BEGIN
       VALUE "ProductName", "batch"
       VALUE "ProductVersion", VERSION_STR
     END
-  END
-  BLOCK "VarFileInfo"
-  BEGIN
-    VALUE "Translation", 0x0809, 1200
   END
 END
