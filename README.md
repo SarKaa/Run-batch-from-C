@@ -25,7 +25,7 @@ Step 4: Tell me how it goes on [my discord server](https://discord.gg/VDUFB3gpeQ
 
 If your app uses arguments that are passed to the batch, this code makes it easy for you to do this:
 
-argv[0] (executable name) is passed as %1
+argv[0] (executable name) is passed as %1 surrounded  by "quote marks"
 
 argv[1] (first argument) is passed as %2
 
@@ -36,7 +36,7 @@ EG.
 
 when you type ```c:\batch.exe I like big black chickens``` into the prompt:
 
-%1 = c:\batch.exe
+%1 = "c:\batch.exe"
 
 %2 = I
 
@@ -48,4 +48,4 @@ when you type ```c:\batch.exe I like big black chickens``` into the prompt:
 
 %6 = chickens
 
-NOTE: %1 will be whatever you type into the prompt, so if you type ```c:\batch.exe```, %1 will be ```c:\batch.exe```. If you type ```batch.exe```, %1 will be ```batch.exe```, and finally, if you type ```batch```, %1 will be, you guessed it, ```batch```
+NOTE: %1 will be whatever you type into the prompt, so if you type ```c:\batch.exe```, %1 will be ```"c:\batch.exe"```. If you type ```batch.exe```, %1 will be ```"batch.exe"```, and finally, if you type ```batch```, %1 will be, you guessed it, ```"batch"```
