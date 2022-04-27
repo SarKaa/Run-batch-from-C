@@ -24,9 +24,8 @@ BEGIN
       VALUE "FileDescription", "C app converted from batch"
       VALUE "ProductVersion", VERSION_STR
       VALUE "InternalName", "batch-to-c"
-      VALUE "OriginalFilename", "batch.exe"
+      VALUE "OriginalFilename", "batch-to-c.exe"
       VALUE "ProductName", "batch-to-c"
-      VALUE "ProductVersion", VERSION_STR
     END
   END
 END
