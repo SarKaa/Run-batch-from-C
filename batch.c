@@ -99,27 +99,27 @@ int main(int argc,char* argv[])
 {
   startup();
   if (argc>1) {
-    int i;
-    int intsize = strlen(argv[1]) + 2;
-    char *args = (char*)malloc(sizeof(char)*intsize);
-    // Copies first argument to variable
-    strcpy(args,argv[1]);
-    for (i=2; i< argc; i++) {
-    // Appends every other argument to variable with a space
-        intsize = intsize + strlen(argv[i]) + 5;
-        args = (char *) realloc(args, sizeof(char)*intsize);
-        sprintf(args, "%s %s", args, argv[i]);
-        }
-    batch = (char*)malloc(strlen(temp) + strlen(argv[0]) + strlen(args) + 20);
-    // Generate final command to pass to CreateProcess
-    sprintf(batch, "%s \"%s\" %s", temp, argv[0], args);
-    free(args);
-    batch = (char*)realloc(batch, strlen(batch) + 1);
-  } else {
-    batch = (char*)malloc(strlen(temp) + strlen(argv[0]) + 20);
-    // Generate final command to pass to CreateProcess
-    sprintf(batch, "%s \"%s\"", temp, argv[0]);
-    batch = (char*)realloc(batch, strlen(batch) + 1);
+      int i;
+      int intsize = strlen(argv[1]) + 2;
+      char *args = (char*)malloc(sizeof(char)*intsize);
+      // Copies first argument to variable
+      strcpy(args,argv[1]);
+      for (i=2; i< argc; i++) {
+      // Appends every other argument to variable with a space
+          intsize = intsize + strlen(argv[i]) + 5;
+           args = (char *) realloc(args, sizeof(char)*intsize);
+          sprintf(args, "%s %s", args, argv[i]);
+          }
+      batch = (char*)malloc(strlen(temp) + strlen(argv[0]) + strlen(args) + 20);
+      // Generate final command to pass to CreateProcess
+      sprintf(batch, "%s \"%s\" %s", temp, argv[0], args);
+      free(args);
+      batch = (char*)realloc(batch, strlen(batch) + 1);
+    } else {
+      batch = (char*)malloc(strlen(temp) + strlen(argv[0]) + 20);
+      // Generate final command to pass to CreateProcess
+      sprintf(batch, "%s \"%s\"", temp, argv[0]);
+      batch = (char*)realloc(batch, strlen(batch) + 1);
   }
   makebatch();
   // Return final return value of batch to the main function
