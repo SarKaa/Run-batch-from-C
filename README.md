@@ -18,7 +18,9 @@ Step 1: Replace batch.bat and icon.ico with the right files
 
 Step 2: Replace the version info in batch.rc with the right info
 
-Step 3: Use mingw to compile (cygwin works for compilation but the app won't run)
+Step 3: Use mingw to compile (You can use both the windows release and the WSL version of mingw)
+
+NOTE: Cygwin will not work as it creates its own environment
 
 Step 4: Tell me how it goes on [my discord server](https://discord.gg/VDUFB3gpeQ)
 
