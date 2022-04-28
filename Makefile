@@ -10,7 +10,7 @@ batch.exe:  batch.o batch.res
 batch.res:  batch.rc icon.ico batch.bat Makefile
 	${RC} batch.rc -O coff -o batch.res
 
-# Deletes all compiled files, NOTE: This bit doesn't work with cygwin
+# Deletes all compiled files
 clean: 
 	if exist batch.exe del batch.exe
 	if exist batch.res del batch.res
