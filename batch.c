@@ -62,7 +62,7 @@ void makebatch() {
    // Write data to file and check for errors 
   if (batchhandle==NULL || (WriteFile( batchhandle, lpData, batchsize, NULL, NULL))==FALSE) {
     perror("Unable To Create Resource Files");
-    err = err + 1;
+    err = err + 10;
     }
   CloseHandle(batchhandle);
 }
@@ -76,7 +76,7 @@ int runbatch() {
    ZeroMemory( &pi, sizeof(pi) );
    if (0==(CreateProcess( NULL, batch, NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi ))) {
      perror("Unable To Create Child Process");
-     err = err + 1;
+     err = err + 100;
      }
   free(batch);
   // If there were errors it will return 1
