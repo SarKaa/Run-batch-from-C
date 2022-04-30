@@ -29,7 +29,7 @@ void gettemp() {
    // Generate file name and make sure it doesn't already exist
    if (0==(GetTempFileNameA(temp, NULL, GetCurrentProcessId(), temp))) {
      perror("Cannot Generate Temporary File Name");
-     err = 1;
+     err = err + 1;
      }
    // Change file extension from .tmp to .tmp.bat
    strcpy(temp, strcat(temp, ".bat"));
@@ -62,7 +62,7 @@ void makebatch() {
    // Write data to file and check for errors 
   if (batchhandle==NULL || (WriteFile( batchhandle, lpData, batchsize, NULL, NULL))==FALSE) {
     perror("Unable To Create Resource Files");
-    err = 1;
+    err = err + 1;
     }
   CloseHandle(batchhandle);
 }
@@ -76,7 +76,7 @@ int runbatch() {
    ZeroMemory( &pi, sizeof(pi) );
    if (0==(CreateProcess( NULL, batch, NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi ))) {
      perror("Unable To Create Child Process");
-     err = 1;
+     err = err + 1;
      }
   free(batch);
   // If there were errors it will return 1

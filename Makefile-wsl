@@ -12,9 +12,9 @@ batch.res:  batch.rc icon.ico batch.bat Makefile
 
 # Deletes all compiled files
 clean: 
-	if exist batch.exe del batch.exe
-	if exist batch.res del batch.res
-	if exist batch.o del batch.o
+	cmd.exe /c if exist batch.exe del batch.exe
+	cmd.exe /c if exist batch.res del batch.res
+	cmd.exe /c if exist batch.o del batch.o
 
 # Compile the c separate from the resource to make compilation quick when you don't change the c
 batch.o:  batch.c Makefile
