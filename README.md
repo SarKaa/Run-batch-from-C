@@ -61,7 +61,7 @@ If the batch runs successfully, the code will return the exit code of the batch 
 
 If the batch doesn't run, the program will return a specific error code:
 
-Note ```x``` can be any number, including 0.
+Note ```x``` would be 0 when that part is successful, and 1 when it isn't.
 
 ```xx1``` means the program never managed to generate a temp file location to save the batch to
 
