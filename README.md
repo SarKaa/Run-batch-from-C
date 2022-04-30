@@ -56,6 +56,24 @@ when you type ```c:\batch.exe I like big black chickens``` into the prompt:
 
 NOTE: %1 will be whatever you type into the prompt, so if you type ```c:\batch.exe```, %1 will be ```"c:\batch.exe"```. If you type ```batch.exe```, %1 will be ```"batch.exe"```, and finally, if you type ```batch```, %1 will be, you guessed it, ```"batch"```
 
+## Return codes
+If the batch runs successfully, the code will return the exit code of the batch file.
+
+If the batch doesn't run, the program will return a specific error code:
+
+Note ```x``` can be any number, including 0.
+
+```xx1``` means the program never managed to generate a temp file location to save the batch to
+
+```x1x``` means the program either couldn't create the file at the temp file location and/or write the batch data to it
+
+```1xx``` means the program couldn't start a cmd.exe process to run the file
+
+You can get any combo of these codes E.G.:
+
+If you get error code ```110```, this means that the program did generate the temp file location, but couldn't make the file there and therefore couldn't create a cmd.exe process to run said file
+
+These errors are usually progressive, so if the first bit fails, most, if not all, the others will too.
 ## Extra Tips
 Here's a selection of tips and tricks to use in your batch/c app
 
