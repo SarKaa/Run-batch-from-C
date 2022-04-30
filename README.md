@@ -7,11 +7,11 @@ This C template saves the batch file as a resource within the app, which is extr
 
 But wait, I missed the main bit: as you're just saving the batch as a text-based resource, it doesn't register as a threat and you don't get the windows defender alerts from it, unlike almost every other batch to exe convertor.
 
-For more information on how it works check out the comments I added in the code (batch.c, batch.rc and Makefile all have comments)
+For more information on how it works check out the comments I added in the code (batch.c, batch.rc and Makefile all have comments). My other project [jailm8 for windows](https://github.com/SarKaa/jailm8-windows) uses a modified version of this code for its backend/CLI interface, so be sure to check that out to see how it works.
 
 I am nowhere near the tidiest with my code, or the most knowledgable, so if you spot any improvements or problems be sure to submit an issue or pull request. 
 
-If you have a choice, I would still recommend writing your app in an actual programming language, as it's just not pracrical or good practice to write apps like this.
+If you have a choice, I would still recommend writing your app in an actual programming language, as it's just not practical or good practice to write apps like this. I know I made [jailm8 for windows](https://github.com/SarKaa/jailm8-windows) using some of this code, but that's because it requires aspects of this code and its much easier to run other executables from batch.
 
 ## INSTRUCTIONS: 
 Pretty simple really, and once you've done this, you won't need to do it ever again. Just edit the batch as if you're coding an app in it ;)
@@ -82,3 +82,4 @@ If you want to add a manifest to your app, add the line ```CREATEPROCESS_MANIFES
 If you want to save all variables except the executable name to one argument, add this line to your batch file: ```for /f "tokens=1,* delims= " %%a in ("%*") do set "args=%%b"```. This will save all variables to one ```%args%``` variable
 
 If you only want the executable name instead of the file path, add the lines ```for %%F in (%1) do set exename=%%~nxF``` and ```if not "%exename:~-4%"==".exe" set "exename=%exename%.exe"``` to your batch file. This will ensure that even if you type ```C:\batch.exe```, ```batch.exe``` or ```batch```, ```%exename%``` will always be ```batch.exe```. This will also remove the "quotation marks".
+
