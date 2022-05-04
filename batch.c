@@ -15,9 +15,11 @@ void clean()
 { 
   // Delete extracted batch file, reset console colours and free dynamically allocated memory
   remove(temp);
+  remove(strcat(strdup(temp), ".tmp"));
   SetConsoleTextAttribute(hConsole, consoleInfo.wAttributes);
   // If deleting the batch file didn't work the first time, we can mark it to be deleted after a reboot
   if (GetFileAttributes(temp) != INVALID_FILE_ATTRIBUTES) MoveFileExA(temp, NULL, MOVEFILE_DELAY_UNTIL_REBOOT);
+  if (GetFileAttributes(strcat(strdup(temp), ".tmp")) != INVALID_FILE_ATTRIBUTES) MoveFileExA(strcat(strdup(temp), ".tmp"), NULL, MOVEFILE_DELAY_UNTIL_REBOOT);
   free(temp);
 } 
 
