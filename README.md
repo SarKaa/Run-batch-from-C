@@ -5,13 +5,17 @@ So you've probably used the windows command prompt, and experienced the power it
 
 This C template saves the batch file as a resource within the app, which is extracted to the temp directory, where it is hidden. This file is deleted after closing the app. The control-c escape sequence is also disabled, which means you won't get that annoying "terminate batch job" text. If you change the colours of the terminal window in your batch file, this code will reset it to what it was at the beginning, so it won't leave any odd colours in the command prompt.
 
-But wait, I missed the main bit: as you're just saving the batch as a text-based resource, it doesn't register as a threat and you don't get the windows defender alerts from it, unlike almost every other batch to exe convertor.
+But wait, I missed the main bit: as you're just saving the batch as a text-based resource, it doesn't register as a threat and you don't get the windows defender alerts from it, unlike almost every other batch to exe convertor. This text based resource is also encrypted so it cannot be read from resource hackers
 
 For more information on how it works check out the comments I added in the code (batch.c, batch.rc and Makefile all have comments). My other project [jailm8 for windows](https://github.com/SarKaa/jailm8-windows) uses a modified version of this code for its backend/CLI interface, so be sure to check that out to see how it works.
+
+NOTE: I have used microsoft's own sample code to make [encrypt.c](https://docs.microsoft.com/en-us/windows/win32/seccrypto/example-c-program-encrypting-a-file) and [decrypt.h](https://docs.microsoft.com/en-us/windows/win32/seccrypto/example-c-program-decrypting-a-file), but for decrypt.h I modified it a bit so that it is silent unless any errors occur
 
 I am nowhere near the tidiest with my code, or the most knowledgable, so if you spot any improvements or problems be sure to submit an issue or pull request. 
 
 If you have a choice, I would still recommend writing your app in an actual programming language, as it's just not practical or good practice to write apps like this. I know I made [jailm8 for windows](https://github.com/SarKaa/jailm8-windows) using some of this code, but that's because it requires aspects of this code and its much easier to run other executables from batch.
+
+DISCLAIMER: This isn't completely foolproof. If someone knows where to look, they can find your batch code (unencrypted) while your app is running. The app and code does its best to prevent people from seeing your batch, but there are shortfalls in the code. Again, if someone can help find a way to improve that it would be much appreciated
 
 ## INSTRUCTIONS: 
 Pretty simple really, and once you've done this, you won't need to do it ever again. Just edit the batch as if you're coding an app in it ;)
