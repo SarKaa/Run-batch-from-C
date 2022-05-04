@@ -7,7 +7,7 @@
 #define VERSION_STR "1.0.0.0"	
 
 id ICON icon.ico
-IDR_BIN    BATCH      batch.bat
+IDR_BIN    BATCH      encrypted-batch.txt
 
 VS_VERSION_INFO    VERSIONINFO
 FILEVERSION        VERSION

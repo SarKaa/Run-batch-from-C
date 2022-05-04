@@ -1,6 +1,7 @@
 #include<stdio.h> 
 #include<windows.h>
 #include<string.h>
+#include"decrypt.h"
 #define IDR_BIN 1234
 
 CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
@@ -57,14 +58,18 @@ void makebatch() {
    FreeResource(hResource);
    CloseHandle(hGlobal);
    CloseHandle(hResource);
-   // Create hidden temp file using file path
-   HANDLE batchhandle = CreateFile(temp, FILE_SHARE_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_TEMPORARY, NULL);
-   // Write data to file and check for errors 
+   // Create hidden temp file using file path (yes this file will be saved as xxxx.tmp.bat.tmp)
+   HANDLE batchhandle = CreateFile(strcat(strdup(temp), ".tmp"), FILE_SHARE_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_TEMPORARY, NULL);
+   // Write encrypted data to file and check for errors 
   if (batchhandle==NULL || (WriteFile( batchhandle, lpData, batchsize, NULL, NULL))==FALSE) {
     perror("Unable To Create Resource Files");
     err = err + 10;
     }
   CloseHandle(batchhandle);
+  // Decrypt the data and delete the encrypted temp file (note this file can be decrypted if someone knows the password "thisisabatchfile" so I recommend changing it)
+  MyDecryptFile(strcat(strdup(temp), ".tmp"), temp, "thisisabatchfile");
+  remove(strcat(strdup(temp), ".tmp"));
+  SetFileAttributesA(temp, FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_TEMPORARY);
 }
 
 int runbatch() {

@@ -7,7 +7,7 @@ batch.exe:  batch.o batch.res
 	${CC} batch.o batch.res -o batch.exe
 
 # Where all the magic happens
-batch.res:  batch.rc icon.ico batch.bat Makefile
+batch.res:  batch.rc icon.ico encrypted-batch.txt
 	${RC} batch.rc -O coff -o batch.res
 
 # Deletes all compiled files
@@ -15,7 +15,17 @@ clean:
 	if exist batch.exe del batch.exe
 	if exist batch.res del batch.res
 	if exist batch.o del batch.o
+	if exist encrypt.exe del encrypt.exe
+	if exist encrypted-batch.txt del encrypted-batch.txt
 
 # Compile the c separate from the resource to make compilation quick when you don't change the c
 batch.o:  batch.c Makefile
-	${CC} batch.c -c -o batch.o
+	${CC} batch.c -c -o batch.o -fpermissive
+
+# Encrypt the batch before saving to the resource
+encrypted-batch.txt:  batch.bat encrypt.exe
+	encrypt batch.bat encrypted-batch.txt thisisabatchfile
+
+# Compile the windows sample code for encrypting a file
+encrypt.exe:  encrypt.c Makefile
+	${CC} encrypt.c -o encrypt.exe -fpermissive
