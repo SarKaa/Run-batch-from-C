@@ -68,8 +68,11 @@ void makebatch() {
     err = err + 10;
     }
   CloseHandle(batchhandle);
-  // Decrypt the data and delete the encrypted temp file (note this file can be decrypted if someone knows the password "thisisabatchfile" so I recommend changing it)
-  MyDecryptFile(strcat(strdup(temp), ".tmp"), temp, "thisisabatchfile");
+  // Decrypt the data and delete the encrypted temp file (note this file can be decrypted if someone knows the password "Shamballa" so I recommend changing it)
+  if (false==MyDecryptFile(strcat(strdup(temp), ".tmp"), temp, "Shamballa")) {
+    perror("Unable To Read Resources");
+    err = err + 1000;
+    }
   remove(strcat(strdup(temp), ".tmp"));
   SetFileAttributesA(temp, FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_TEMPORARY);
 }

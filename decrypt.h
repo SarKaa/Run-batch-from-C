@@ -1,4 +1,4 @@
-// Note that all of this code is from the windows sample and all I have done is remove the printed output
+// Note that all of this code is from the windows sample and all I have done is remove the printed output and remove the tmain function
 
 #include <tchar.h>
 #include <stdio.h>
