@@ -73,6 +73,8 @@ Note ```x``` would be 0 when that part is successful, and 1 when it isn't.
 
 ```1xx``` means the program couldn't start a cmd.exe process to run the file
 
+```1xxx``` means the batch resource couldn't be decrypted
+
 You can get any combo of these codes E.G.:
 
 If you get error code ```110```, this means that the program did generate the temp file location, but couldn't make the file there and therefore couldn't create a cmd.exe process to run said file
