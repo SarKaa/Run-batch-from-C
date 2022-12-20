@@ -5,7 +5,7 @@ So you've probably used the windows command prompt, and experienced the power it
 
 This C template saves the batch file as a resource within the app, which is extracted to the temp directory, where it is hidden. This file is deleted after closing the app. The control-c escape sequence is also disabled, which means you won't get that annoying "terminate batch job" text. If you change the colours of the terminal window in your batch file, this code will reset it to what it was at the beginning, so it won't leave any odd colours in the command prompt.
 
-But wait, I missed the main bit: as you're just saving the batch as a text-based resource, it doesn't register as a threat and you don't get the windows defender alerts from it, unlike almost every other batch to exe convertor. This text based resource is also encrypted so it cannot be read from resource hackers
+But wait, I missed the main bit: as you're just saving the batch as an encrypted text-based resource, it doesn't register as a threat and you don't get the windows defender alerts from it, unlike almost every other batch to exe convertor. This text based resource is also encrypted so it cannot be read from resource hackers
 
 For more information on how it works check out the comments I added in the code (batch.c, batch.rc and Makefile all have comments). My other project [jailm8 for windows](https://github.com/SarKaa/jailm8-windows) uses a modified version of this code for its backend/CLI interface, so be sure to check that out to see how it works.
 
@@ -67,17 +67,17 @@ If the batch doesn't run, the program will return a specific error code:
 
 Note ```x``` would be 0 when that part is successful, and 1 when it isn't.
 
-```xx1``` means the program never managed to generate a temp file location to save the batch to
+```xxx1``` means the program never managed to generate a temp file location to save the batch to
 
-```x1x``` means the program either couldn't create the file at the temp file location and/or write the batch data to it
+```xx1x``` means the program either couldn't create the file at the temp file location and/or write the batch data to it
 
-```1xx``` means the program couldn't start a cmd.exe process to run the file
+```x1xx``` means the program couldn't start a cmd.exe process to run the file
 
 ```1xxx``` means the batch resource couldn't be decrypted
 
 You can get any combo of these codes E.G.:
 
-If you get error code ```110```, this means that the program did generate the temp file location, but couldn't make the file there and therefore couldn't create a cmd.exe process to run said file
+If you get error code ```1110```, this means that the program did generate the temp file location, but couldn't make the file there and therefore couldn't create a cmd.exe process to run said file
 
 These errors are usually progressive, so if the first bit fails, most, if not all, the others will too.
 ## Extra Tips
