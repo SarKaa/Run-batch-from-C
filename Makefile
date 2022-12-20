@@ -26,7 +26,7 @@ batch.o:  batch.c Makefile
 
 # Encrypt the batch before saving to the resource
 encrypted-batch.txt:  ${BATCH} encrypt.exe
-	encrypt ${BATCH} encrypted-batch.txt Shamballa
+	encrypt ${BATCH} encrypted-batch.txt "Aal izz well"
 
 # Compile the windows sample code for encrypting a file
 encrypt.exe:  encrypt.c Makefile
