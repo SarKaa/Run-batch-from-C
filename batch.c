@@ -30,7 +30,7 @@ void gettemp() {
    GetTempPathA(1024, temp);
    temp = (char *) realloc(temp, strlen(temp) + 100);
    // Generate file name and make sure it doesn't already exist
-   if (0==(GetTempFileNameA(temp, NULL, GetCurrentProcessId(), temp))) {
+   if (0==(GetTempFileNameA(temp, NULL, GetTickCount()*GetCurrentProcessId(), temp))) {
      perror("Cannot Generate Temporary File Name");
      err = err + 1;
      }
