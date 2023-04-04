@@ -1,12 +1,16 @@
 # Set the compiling tools to use (NOTE: gcc will not work)
 CC = g++
 RC = windres
+# Change batch.exe to whatever you want your executable to be called
 EXE = batch.exe
+# Change batch.bat to whatever your batch file is called
 BATCH = batch.bat
+# Change the password to whatever you want, as long as you change it in batch.c too
+PASSWORD = "Aal izz well"
 
 # Compile the main body c with the resource to produce the final exe
 ${EXE}:  batch.o batch.res
-	${CC} batch.o batch.res -o batch.exe
+	${CC} batch.o batch.res -o ${EXE}
 
 # Where all the magic happens
 batch.res:  batch.rc icon.ico encrypted-batch.txt
@@ -26,7 +30,7 @@ batch.o:  batch.c Makefile
 
 # Encrypt the batch before saving to the resource
 encrypted-batch.txt:  ${BATCH} encrypt.exe
-	encrypt ${BATCH} encrypted-batch.txt "Aal izz well"
+	encrypt ${BATCH} encrypted-batch.txt ${PASSWORD}
 
 # Compile the windows sample code for encrypting a file
 encrypt.exe:  encrypt.c Makefile

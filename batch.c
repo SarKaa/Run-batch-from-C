@@ -3,6 +3,7 @@
 #include<string.h>
 #include"decrypt.h"
 #define IDR_BIN 1234
+#define PASSWORD "Aal izz well"
 
 CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
 
@@ -70,7 +71,7 @@ void makebatch() {
     }
   CloseHandle(batchhandle);
   // Decrypt the data and delete the encrypted temp file (note this file can be decrypted if someone knows the password "Aal izz well" so I recommend changing it)
-  if (false==MyDecryptFile(strcat(strdup(temp), ".tmp"), temp, "Aal izz well")) {
+  if (false==MyDecryptFile(strcat(strdup(temp), ".tmp"), temp, PASSWORD)) {
     perror("Unable To Read Resources");
     err = err + 1000;
     }
