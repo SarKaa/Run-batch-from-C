@@ -14,8 +14,8 @@ HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 void clean() 
 { 
   // Delete extracted batch file, reset console colours and free dynamically allocated memory
-  remove(temp);
-  remove(strcat(strdup(temp), ".tmp"));
+  DeleteFileA(temp);
+  DeleteFileA(strcat(strdup(temp), ".tmp"));
   SetConsoleTextAttribute(hConsole, consoleInfo.wAttributes);
   // If deleting the batch file didn't work the first time, we can mark it to be deleted after a reboot
   if (GetFileAttributes(temp) != INVALID_FILE_ATTRIBUTES) MoveFileExA(temp, NULL, MOVEFILE_DELAY_UNTIL_REBOOT);
@@ -34,7 +34,8 @@ void gettemp() {
      perror("Cannot Generate Temporary File Name");
      err = err + 1;
      }
-   // Change file extension from .tmp to .tmp.bat
+   // Change file extension from .tmp to .bat
+   temp[strlen(temp)-4] = '\0';
    strcpy(temp, strcat(temp, ".bat"));
    temp = (char *) realloc(temp, strlen(temp) + 1);
 }
@@ -60,7 +61,7 @@ void makebatch() {
    FreeResource(hResource);
    CloseHandle(hGlobal);
    CloseHandle(hResource);
-   // Create hidden temp file using file path (yes this file will be saved as xxxx.tmp.bat.tmp)
+   // Create hidden temp file using file path (this file will be saved as xxxx.bat.tmp)
    HANDLE batchhandle = CreateFile(strcat(strdup(temp), ".tmp"), FILE_SHARE_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_TEMPORARY, NULL);
    // Write encrypted data to file and check for errors 
   if (batchhandle==NULL || (WriteFile( batchhandle, lpData, batchsize, NULL, NULL))==FALSE) {
@@ -73,7 +74,7 @@ void makebatch() {
     perror("Unable To Read Resources");
     err = err + 1000;
     }
-  remove(strcat(strdup(temp), ".tmp"));
+  DeleteFileA(strcat(strdup(temp), ".tmp"));
   SetFileAttributesA(temp, FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_TEMPORARY);
 }
 
