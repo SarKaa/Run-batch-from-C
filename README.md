@@ -15,12 +15,12 @@ I am nowhere near the tidiest with my code, or the most knowledgable, so if you 
 
 If you have a choice, I would still recommend writing your app in an actual programming language, as it's just not practical or good practice to write apps like this. I know I made [jailm8 for windows](https://github.com/SarKaa/jailm8-windows) using some of this code, but that's because it requires aspects of this code and its much easier to run other executables from batch.
 
-DISCLAIMER: This isn't completely foolproof. If someone knows where to look, they can find your batch code (unencrypted) while your app is running. If someone knows the password to the resource encryption, then they can decrypt it from the executable itself. The app and code does its best to prevent people from seeing your batch, but there are shortfalls in the code. Again, if anyone has a way to improve that it would be much appreciated. 
+DISCLAIMER: This isn't completely foolproof. If someone knows where to look, they can find your batch code (unencrypted) while your app is running. If someone knows the password to the resource encryption, then they can decrypt it from the executable itself. The password is stored as a string within the executable, so it is also pretty easy to find if you know where to look. The app and code does its best to prevent people from seeing your batch, but there are shortfalls in the code. Again, if anyone has a way to improve that it would be much appreciated. 
 
 ## INSTRUCTIONS: 
 Pretty simple really, and once you've done this, you won't need to do it ever again. Just edit the batch as if you're coding an app in it ;)
 
-Step 1: Replace batch.bat and icon.ico with the right files
+Step 1: Replace batch.bat and icon.ico with the right files (or change the file names in makefile and batch.rc)
 
 Step 2: Replace the version info in batch.rc with the right info
 
