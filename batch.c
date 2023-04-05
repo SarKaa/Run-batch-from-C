@@ -27,7 +27,7 @@ void clean()
 
 void gettemp() {
    // Allow pseudo random string to be generated for the prefix of the temp file
-    srand(time(NULL));
+    srand(time(NULL)*GetTickCount());
     static char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-#'!";   
     size_t length = 3;
     char *rndstr = NULL;
