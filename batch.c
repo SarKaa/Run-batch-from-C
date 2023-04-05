@@ -1,6 +1,7 @@
 #include<stdio.h> 
 #include<windows.h>
 #include<string.h>
+#include<time.h>
 #include"decrypt.h"
 #define IDR_BIN 1234
 #define PASSWORD "Aal izz well"
@@ -25,16 +26,32 @@ void clean()
 } 
 
 void gettemp() {
+   // Allow pseudo random string to be generated for the prefix of the temp file
+    srand(time(NULL));
+    static char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-#'!";   
+    size_t length = 3;
+    char *rndstr = NULL;
+    if (length) {
+        rndstr = malloc(sizeof(char) * (length +1));
+        if (rndstr) {            
+            for (int n = 0;n < length;n++) {            
+                int key = rand() % (int)(sizeof(charset) -1);
+                rndstr[n] = charset[key];
+            }
+            rndstr[length] = '\0';
+        }
+    }
    // Generate a unique file path to extract batch file to
    temp = (char*)malloc(sizeof(char)*1024);
    // Get temp directory
    GetTempPathA(1024, temp);
    temp = (char *) realloc(temp, strlen(temp) + 100);
-   // Generate file name and make sure it doesn't already exist
-   if (0==(GetTempFileNameA(temp, NULL, GetTickCount()*GetCurrentProcessId(), temp))) {
+   // Generate triple randomised file name and use the pseudo-random prefix
+   if (0==(GetTempFileNameA(temp, rndstr, GetTickCount()*GetCurrentProcessId(), temp))) {
      perror("Cannot Generate Temporary File Name");
      err = err + 1;
      }
+   free(rndstr);
    // Change file extension from .tmp to .bat
    temp[strlen(temp)-4] = '\0';
    strcpy(temp, strcat(temp, ".bat"));
