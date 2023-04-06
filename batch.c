@@ -16,16 +16,15 @@ HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 void clean() 
 { 
   // Delete extracted batch file, reset console colours and free dynamically allocated memory
-  DeleteFileA(temp);
+  if ((DeleteFileA(temp)) == 0) MoveFileExA(temp, NULL, MOVEFILE_DELAY_UNTIL_REBOOT);
   DeleteFileA(strcat(strdup(temp), ".tmp"));
-  SetConsoleTextAttribute(hConsole, consoleInfo.wAttributes);
-  // If deleting the batch file didn't work the first time, we can mark it to be deleted after a reboot
-  if (GetFileAttributes(temp) != INVALID_FILE_ATTRIBUTES) MoveFileExA(temp, NULL, MOVEFILE_DELAY_UNTIL_REBOOT);
+  // If deleting the encrypted file didn't work the first time, we can mark it to be deleted after a reboot
   if (GetFileAttributes(strcat(strdup(temp), ".tmp")) != INVALID_FILE_ATTRIBUTES) MoveFileExA(strcat(strdup(temp), ".tmp"), NULL, MOVEFILE_DELAY_UNTIL_REBOOT);
   free(temp);
+  SetConsoleTextAttribute(hConsole, consoleInfo.wAttributes);
 } 
 
-void gettemp() {
+DWORD gettemp() {
    // Allow pseudo random string to be generated for the prefix of the temp file
     srand(time(NULL)*GetTickCount());
     static char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-#'!";   
@@ -56,13 +55,14 @@ void gettemp() {
    temp[strlen(temp)-4] = '\0';
    strcpy(temp, strcat(temp, ".bat"));
    temp = (char *) realloc(temp, strlen(temp) + 1);
+   return(GetFileAttributes(temp));
 }
 
 void startup() {
    // Register exit protocols
    atexit(clean);
-   // Generate temp file path
-   gettemp();
+   // Generate temp file path and keep repeating until a unique name is found
+   while(gettemp() != INVALID_FILE_ATTRIBUTES);
    // Disable control C
    SetConsoleCtrlHandler(NULL, TRUE);
    // Save console attribute (colours)
@@ -141,13 +141,13 @@ int main(int argc,char* argv[])
           }
       batch = (char*)malloc(strlen(temp) + strlen(argv[0]) + strlen(args) + 20);
       // Generate final command to pass to CreateProcess
-      sprintf(batch, "%s \"%s\" %s", temp, argv[0], args);
+      sprintf(batch, "\"%s\" \"%s\" %s", temp, argv[0], args);
       free(args);
       batch = (char*)realloc(batch, strlen(batch) + 1);
     } else {
       batch = (char*)malloc(strlen(temp) + strlen(argv[0]) + 20);
       // Generate final command to pass to CreateProcess
-      sprintf(batch, "%s \"%s\"", temp, argv[0]);
+      sprintf(batch, "\"%s\" \"%s\"", temp, argv[0]);
       batch = (char*)realloc(batch, strlen(batch) + 1);
   }
   makebatch();
