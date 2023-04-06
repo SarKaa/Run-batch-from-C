@@ -128,12 +128,11 @@ int runbatch() {
 int main(int argc,char* argv[])
 {
   startup();
-      int intsize = 2;
-      char *args = (char*)malloc(sizeof(char)*intsize);
+      char *args = strdup("");
       if (argc>1) {
       int i;
-      intsize = strlen(argv[1]) + 2;
-      args = (char *) realloc(args, sizeof(char)*intsize);
+      int intsize = strlen(argv[1]) + 2;
+      args = (char*)malloc(sizeof(char)*intsize);
       // Copies first argument to variable
       strcpy(args,argv[1]);
       for (i=2; i< argc; i++) {
@@ -142,11 +141,11 @@ int main(int argc,char* argv[])
            args = (char *) realloc(args, sizeof(char)*intsize);
           sprintf(args, "%s %s", args, argv[i]);
           }
-      } else strcpy(args, ""); 
+      }
       // Generate final command to pass to CreateProcess
       batch = (char*)malloc(strlen(temp) + strlen(argv[0]) + strlen(args) + 20);
       sprintf(batch, "\"%s\" \"%s\" %s", temp, argv[0], args);
-      free(args);
+      if (argc>1) free(args);
       batch = (char*)realloc(batch, strlen(batch) + 1);
   makebatch();
   // Return final return value of batch to the main function
