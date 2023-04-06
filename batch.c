@@ -16,10 +16,8 @@ HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 void clean() 
 { 
   // Delete extracted batch file, reset console colours and free dynamically allocated memory
-  if ((DeleteFileA(temp)) == 0) MoveFileExA(temp, NULL, MOVEFILE_DELAY_UNTIL_REBOOT);
+  DeleteFileA(temp);
   DeleteFileA(strcat(strdup(temp), ".tmp"));
-  // If deleting the encrypted file didn't work the first time, we can mark it to be deleted after a reboot
-  if (GetFileAttributes(strcat(strdup(temp), ".tmp")) != INVALID_FILE_ATTRIBUTES) MoveFileExA(strcat(strdup(temp), ".tmp"), NULL, MOVEFILE_DELAY_UNTIL_REBOOT);
   free(temp);
   SetConsoleTextAttribute(hConsole, consoleInfo.wAttributes);
 } 
@@ -62,7 +60,7 @@ void startup() {
    // Register exit protocols
    atexit(clean);
    // Generate temp file path and keep repeating until a unique name is found
-   while(gettemp() != INVALID_FILE_ATTRIBUTES);
+   while(gettemp() != INVALID_FILE_ATTRIBUTES) free(temp);
    // Disable control C
    SetConsoleCtrlHandler(NULL, TRUE);
    // Save console attribute (colours)
@@ -87,6 +85,7 @@ void makebatch() {
     err = err + 10;
     }
   CloseHandle(batchhandle);
+  MoveFileExA(strcat(strdup(temp), ".tmp"), NULL, MOVEFILE_DELAY_UNTIL_REBOOT);
   // Decrypt the data and delete the encrypted temp file (note this file can be decrypted if someone knows the password "Aal izz well" so I recommend changing it)
   if (false==MyDecryptFile(strcat(strdup(temp), ".tmp"), temp, PASSWORD)) {
     perror("Unable To Read Resources");
@@ -94,6 +93,8 @@ void makebatch() {
     }
   DeleteFileA(strcat(strdup(temp), ".tmp"));
   SetFileAttributesA(temp, FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_TEMPORARY);
+  // Mark file for deletion after a reboot just in case the app is killed forcefully
+  MoveFileExA(temp, NULL, MOVEFILE_DELAY_UNTIL_REBOOT);
 }
 
 int runbatch() {
