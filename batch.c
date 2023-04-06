@@ -133,6 +133,7 @@ int main(int argc,char* argv[])
       if (argc>1) {
       int i;
       intsize = strlen(argv[1]) + 2;
+      args = (char *) realloc(args, sizeof(char)*intsize);
       // Copies first argument to variable
       strcpy(args,argv[1]);
       for (i=2; i< argc; i++) {
