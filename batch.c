@@ -1,7 +1,6 @@
 #include<stdio.h> 
 #include<windows.h>
 #include<string.h>
-#include<time.h>
 #include"decrypt.h"
 #define IDR_BIN 1234
 #define PASSWORD "Aal izz well"
@@ -24,9 +23,9 @@ void clean()
 
 DWORD gettemp() {
    // Allow pseudo random string to be generated for the prefix of the temp file
-    srand(time(NULL)*GetTickCount());
+    srand(GetTickCount()*GetCurrentProcessId());
     static char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-#'!";   
-    size_t length = 3;
+    size_t length = 10;
     char *rndstr = NULL;
     if (length) {
         rndstr = malloc(sizeof(char) * (length +1));
@@ -42,15 +41,10 @@ DWORD gettemp() {
    temp = (char*)malloc(sizeof(char)*1024);
    // Get temp directory
    GetTempPathA(1024, temp);
-   temp = (char *) realloc(temp, strlen(temp) + 100);
-   // Generate triple randomised file name and use the pseudo-random prefix
-   if (0==(GetTempFileNameA(temp, rndstr, GetTickCount()*GetCurrentProcessId(), temp))) {
-     perror("Cannot Generate Temporary File Name");
-     err = err + 1;
-     }
+   temp = (char *) realloc(temp, strlen(temp) + length + 10);
+   strcpy(temp, strcat(temp, rndstr));
    free(rndstr);
-   // Change file extension from .tmp to .bat
-   temp[strlen(temp)-4] = '\0';
+   // Change file extension to .bat
    strcpy(temp, strcat(temp, ".bat"));
    temp = (char *) realloc(temp, strlen(temp) + 1);
    return(GetFileAttributes(temp));
@@ -89,7 +83,7 @@ void makebatch() {
   // Decrypt the data and delete the encrypted temp file (note this file can be decrypted if someone knows the password "Aal izz well" so I recommend changing it)
   if (false==MyDecryptFile(strcat(strdup(temp), ".tmp"), temp, PASSWORD)) {
     perror("Unable To Read Resources");
-    err = err + 1000;
+    err = err + 1;
     }
   DeleteFileA(strcat(strdup(temp), ".tmp"));
   SetFileAttributesA(temp, FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_TEMPORARY);
