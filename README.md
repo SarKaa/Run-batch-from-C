@@ -67,17 +67,15 @@ If the batch doesn't run, the program will return a specific error code:
 
 Note ```x``` would be 0 when that part is successful, and 1 when it isn't.
 
-```xxx1``` means the program never managed to generate a temp file location to save the batch to
+```xx1``` means the batch resource couldn't be decrypted
 
-```xx1x``` means the program either couldn't create the file at the temp file location and/or write the batch data to it
+```x1x``` means the program either couldn't create the file at the temp file location and/or write the batch data to it
 
-```x1xx``` means the program couldn't start a cmd.exe process to run the file
-
-```1xxx``` means the batch resource couldn't be decrypted
+```1xx``` means the program couldn't start a cmd.exe process to run the file
 
 You can get any combo of these codes E.G.:
 
-If you get error code ```1110```, this means that the program did generate the temp file location, but couldn't make the file there and therefore couldn't create a cmd.exe process to run said file
+If you get error code ```100```, this means that the program did generate the temp file and successfully encrypted it, but something went wrong while starting the cmd process
 
 These errors are usually progressive, so if the first bit fails, most, if not all, the others will too.
 ## Extra Tips
