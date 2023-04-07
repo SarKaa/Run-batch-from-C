@@ -22,7 +22,7 @@ void clean()
 } 
 
 DWORD gettemp() {
-   // Allow pseudo random string to be generated for the prefix of the temp file
+   // Allow pseudo random string to be generated for the temp file name
     srand(GetTickCount()*GetCurrentProcessId());
     static char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-#'!";   
     size_t length = 10;
@@ -42,11 +42,10 @@ DWORD gettemp() {
    // Get temp directory
    GetTempPathA(1024, temp);
    temp = (char *) realloc(temp, strlen(temp) + length + 10);
-   strcpy(temp, strcat(temp, rndstr));
+   strcpy(temp, strcat(temp, strcat(rndstr, ".bat")));
    free(rndstr);
-   // Change file extension to .bat
-   strcpy(temp, strcat(temp, ".bat"));
    temp = (char *) realloc(temp, strlen(temp) + 1);
+   // Allows startup() to check if the file already exists
    return(GetFileAttributes(temp));
 }
 
@@ -75,14 +74,14 @@ void makebatch() {
    HANDLE batchhandle = CreateFile(strcat(strdup(temp), ".tmp"), FILE_SHARE_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_TEMPORARY, NULL);
    // Write encrypted data to file and check for errors 
   if (batchhandle==NULL || (WriteFile( batchhandle, lpData, batchsize, NULL, NULL))==FALSE) {
-    perror("Unable To Create Resource Files");
+    printf("Unable To Create Resource Files: Error number %d\n", GetLastError());
     err = err + 10;
     }
   CloseHandle(batchhandle);
   MoveFileExA(strcat(strdup(temp), ".tmp"), NULL, MOVEFILE_DELAY_UNTIL_REBOOT);
   // Decrypt the data and delete the encrypted temp file (note this file can be decrypted if someone knows the password "Aal izz well" so I recommend changing it)
   if (false==MyDecryptFile(strcat(strdup(temp), ".tmp"), temp, PASSWORD)) {
-    perror("Unable To Read Resources");
+    printf("Unable To Read Resources : Error number %d\n", GetLastError());
     err = err + 1;
     }
   DeleteFileA(strcat(strdup(temp), ".tmp"));
@@ -99,11 +98,11 @@ int runbatch() {
    si.cb = sizeof(si);
    ZeroMemory( &pi, sizeof(pi) );
    if (0==(CreateProcess( NULL, batch, NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi ))) {
-     perror("Unable To Create Child Process");
+     printf("Unable To Create Child Process: Error number %d\n", GetLastError());
      err = err + 100;
      }
   free(batch);
-  // If there were errors it will return 1
+  // If there were errors it will return the error code for the failed processes
   if (err!=0) {
       CloseHandle(pi.hProcess);
       CloseHandle(pi.hThread);
