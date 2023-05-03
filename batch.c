@@ -53,7 +53,7 @@ void startup() {
    // Register exit protocols
    atexit(clean);
    // Generate temp file path and keep repeating until a unique name is found
-   while(gettemp() != INVALID_FILE_ATTRIBUTES) free(temp);
+   while(gettemp() != INVALID_FILE_ATTRIBUTES && GetFileAttributes(strcat(temp,".tmp"))!=INVALID_FILE_ATTRIBUTES) free(temp);
    // Disable control C
    SetConsoleCtrlHandler(NULL, TRUE);
    // Save console attribute (colours)
