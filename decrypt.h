@@ -81,7 +81,7 @@ bool MyDecryptFile(
         FILE_SHARE_READ,
         NULL,
         OPEN_ALWAYS,
-        FILE_ATTRIBUTE_NORMAL,
+        FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_TEMPORARY,
         NULL);
     if(INVALID_HANDLE_VALUE != hDestinationFile)
     {

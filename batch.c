@@ -85,7 +85,6 @@ void makebatch() {
     err = err + 1;
     }
   DeleteFileA(strcat(strdup(temp), ".tmp"));
-  SetFileAttributesA(temp, FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_TEMPORARY);
   // Mark file for deletion after a reboot just in case the app is killed forcefully
   MoveFileExA(temp, NULL, MOVEFILE_DELAY_UNTIL_REBOOT);
 }

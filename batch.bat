@@ -1,6 +1,6 @@
 @echo off
 title Isn't this cool?
-echo [31mTyping [32m%* [31mgets you hacked [33mbwahahahahaahhahaahahahahahahahhahahahahahahahaha
+echo [31mUsing [32m%* [31mgets you hacked [33mbwahahahahaahhahaahahahahahahahhahahahahahahahaha
 echo.
 echo [32mDetected directory: [31m
 dir 
