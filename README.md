@@ -87,3 +87,4 @@ If you want to save all variables except the executable name to one argument, ad
 
 If you only want the executable name instead of the file path, add the lines ```for %%F in (%1) do set exename=%%~nxF``` and ```if not "%exename:~-4%"==".exe" set "exename=%exename%.exe"``` to your batch file. This will ensure that even if you type ```C:\batch.exe```, ```batch.exe``` or ```batch```, ```%exename%``` will always be ```batch.exe```. This will also remove the "quotation marks".
 
+For an extra (and maybe unnecessary level of) security, change the resource name from ```batch``` to some sort of ```error``` and change the passkey to some variant of ```Unable To Read Resources : Error number``` to avoid the passkey being detected and used through any old tet editor.
