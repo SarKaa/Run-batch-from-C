@@ -68,7 +68,7 @@ bool MyDecryptFile(
     else
     { 
         MyHandleError(
-            TEXT("Error Creating Resources"), 
+            TEXT("Error Opening Resources"), 
             GetLastError());
         goto Exit_MyDecryptFile;
     } 
@@ -89,7 +89,7 @@ bool MyDecryptFile(
     else
     {
         MyHandleError(
-            TEXT("Error opening resource\n"), 
+            TEXT("Error Creating resource\n"), 
             GetLastError()); 
         goto Exit_MyDecryptFile;
     }
