@@ -25,7 +25,7 @@ clean:
 	if exist encrypted-batch.txt del encrypted-batch.txt
 
 # Compile the c separate from the resource to make compilation quick when you don't change the c
-batch.o:  batch.c Makefile
+batch.o:  batch.c Makefile decrypt.h
 	${CC} batch.c -c -o batch.o -fpermissive
 
 # Encrypt the batch before saving to the resource
