@@ -1,4 +1,4 @@
-name: build
+name: Build and Publish Release
 
 on:
   push:
@@ -8,50 +8,31 @@ on:
 
 jobs:
   build:
-    runs-on: windows-2019
-    defaults:
-      run:
-        shell: msys2 {0}
-    strategy:
-      fail-fast: false
-      matrix:
-        include: [
-          { msystem: mingw64, arch: x86_64 }
-        ]
+    runs-on: windows-latest
+
     steps:
-    - uses: msys2/setup-msys2@v2
-      with:
-        msystem: ${{ matrix.msystem }}
-        release: false
-        update: false
-        install: >-
-          base-devel
-          git
-          mingw-w64-${{ matrix.arch }}-gcc
-          make
-          libtool
-          autoconf
-          automake-wrapper
-          mingw-w64-${{ matrix.arch }}-libzip
-          mingw-w64-${{ matrix.arch }}-github-cli
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-    - uses: actions/checkout@v4
-    - name: prepare environment
+    - name: Install mingw64
       run: |
-        echo "target_triplet=`gcc -dumpmachine`" >> $GITHUB_ENV
-        git config --global core.autocrlf false
+        choco install -y mingw
 
-    - name: Build executable
+    - name: Build with make
       run: |
-        git clone --depth=1 --recursive "${{ github.repository_url }}" .
-        make
+        mingw32-make
 
     - name: Publish release
       if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+      uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        NOW=$(Get-Date -format yyyy-MM-dd)
-        TAG="${GITHUB_REF##*/}-${GITHUB_SHA:0:7}"
-        gh release create "$TAG" --title "Release $NOW"
-        gh release upload "$TAG" batch.exe
+      with:
+        tag_name: ${{ github.sha }}
+        release_name: Release ${{ github.sha }}
+        body: |
+          Release created automatically by GitHub Actions.
+        draft: false
+        prerelease: false
+        files: |
+          batch.exe
