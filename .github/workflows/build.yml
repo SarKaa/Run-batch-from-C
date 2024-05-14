@@ -14,9 +14,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Install mingw64
+    - name: Install MSYS2 and required dependencies
       run: |
-        choco install -y mingw
+        choco install -y msys2
+        refreshenv
+        pacman -Syuu --noconfirm
+        pacman -S --noconfirm base-devel git mingw-w64-x86_64-gcc make libtool autoconf automake mingw-w64-x86_64-libzip mingw-w64-x86_64-github-cli
+        pacman -S --noconfirm mingw-w64-x86_64-windows-crt-git # Install Windows CRT
+        pacman -S --noconfirm mingw-w64-x86_64-windows-api-headers # Install Windows API Headers
+        pacman -S --noconfirm mingw-w64-x86_64-windows-crypt-api # Install Windows CryptoAPI Libraries
 
     - name: Build with make
       run: |
