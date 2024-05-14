@@ -16,13 +16,13 @@ jobs:
 
     - name: Install MSYS2 and required dependencies
       run: |
-        choco install -y msys2
-        refreshenv
-        C:\tools\msys64\usr\bin\bash.exe -lc "pacman -Syuu --noconfirm"
-        C:\tools\msys64\usr\bin\bash.exe -lc "pacman -S --noconfirm base-devel git mingw-w64-x86_64-gcc make libtool autoconf automake mingw-w64-x86_64-libzip mingw-w64-x86_64-github-cli"
-        C:\tools\msys64\usr\bin\bash.exe -lc "pacman -S --noconfirm mingw-w64-x86_64-windows-crt-git" # Install Windows CRT
-        C:\tools\msys64\usr\bin\bash.exe -lc "pacman -S --noconfirm mingw-w64-x86_64-windows-api-headers" # Install Windows API Headers
-        C:\tools\msys64\usr\bin\bash.exe -lc "pacman -S --noconfirm mingw-w64-x86_64-windows-crypt-api" # Install Windows CryptoAPI Libraries
+    choco install -y msys2
+    refreshenv
+    C:\tools\msys64\usr\bin\bash.exe -lc "pacman -Syuu --noconfirm"
+    C:\tools\msys64\usr\bin\bash.exe -lc "pacman -S --noconfirm base-devel git mingw-w64-x86_64-gcc make libtool autoconf automake mingw-w64-x86_64-libzip mingw-w64-x86_64-github-cli"
+    C:\tools\msys64\usr\bin\bash.exe -lc "pacman -S --noconfirm mingw-w64-x86_64-windows-crt"
+    C:\tools\msys64\usr\bin\bash.exe -lc "pacman -S --noconfirm mingw-w64-x86_64-windows-api-headers"
+    C:\tools\msys64\usr\bin\bash.exe -lc "pacman -S --noconfirm mingw-w64-x86_64-windows-crypt-api"
 
     - name: Build with make
       run: |
