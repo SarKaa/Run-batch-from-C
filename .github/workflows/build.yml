@@ -8,14 +8,17 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2019
+    defaults:
+      run:
+        shell: msys2 {0}
     strategy:
+      fail-fast: false
       matrix:
-        msystem: [mingw64]
-        arch: [x86_64]
+        include: [
+          { msystem: mingw64, arch: x86_64 }
+        ]
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up MSYS2
     - uses: msys2/setup-msys2@v2
       with:
         msystem: ${{ matrix.msystem }}
@@ -32,9 +35,10 @@ jobs:
           mingw-w64-${{ matrix.arch }}-libzip
           mingw-w64-${{ matrix.arch }}-github-cli
 
-    - name: Prepare environment
+    - uses: actions/checkout@v4
+    - name: prepare environment
       run: |
-        echo "target_triplet=$(gcc -dumpmachine)" >> $GITHUB_ENV
+        echo "target_triplet=`gcc -dumpmachine`" >> $GITHUB_ENV
         git config --global core.autocrlf false
 
     - name: Build executable
