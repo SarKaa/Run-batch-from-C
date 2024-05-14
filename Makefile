@@ -30,7 +30,7 @@ batch.o:  batch.c Makefile decrypt.h
 
 # Encrypt the batch before saving to the resource
 encrypted-batch.txt:  ${BATCH} encrypt.exe
-	encrypt.exe ${BATCH} encrypted-batch.txt ${PASSWORD}
+	./encrypt.exe ${BATCH} encrypted-batch.txt ${PASSWORD}
 
 # Compile the windows sample code for encrypting a file
 encrypt.exe:  encrypt.c Makefile
