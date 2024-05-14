@@ -15,6 +15,8 @@
 #define ENCRYPT_ALGORITHM CALG_RC4 
 #define ENCRYPT_BLOCK_SIZE 8 
 
+bool fEOF;
+
 bool MyEncryptFile(
     LPTSTR szSource, 
     LPTSTR szDestination, 
@@ -453,7 +455,7 @@ bool MyEncryptFile(
     //---------------------------------------------------------------
     // In a do loop, encrypt the source file, 
     // and write to the source file. 
-    bool fEOF = FALSE;
+    fEOF = FALSE;
     do 
     { 
         //-----------------------------------------------------------
