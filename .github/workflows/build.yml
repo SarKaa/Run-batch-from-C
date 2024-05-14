@@ -1,4 +1,4 @@
-name: C/C++ CI
+name: build
 
 on:
   push:
@@ -17,23 +17,21 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Set up MSYS2
-      uses: msys2/setup-msys2@v2
+    - uses: msys2/setup-msys2@v2
       with:
         msystem: ${{ matrix.msystem }}
-        update: true
-
-    - name: Download and Install Dependencies
-      run: |
-        # Download and extract dependencies
-        curl -LO https://repo.msys2.org/msys/x86_64/base-devel-2020.12-1-any.pkg.tar.zst
-        curl -LO https://repo.msys2.org/msys/x86_64/mingw-w64-x86_64-gcc-11.1.0-4-any.pkg.tar.zst
-        curl -LO https://repo.msys2.org/msys/x86_64/make-4.3-3-any.pkg.tar.zst
-        # Extract packages
-        tar -xvf base-devel-2020.12-1-any.pkg.tar.zst -C /
-        tar -xvf mingw-w64-x86_64-gcc-11.1.0-4-any.pkg.tar.zst -C /
-        tar -xvf make-4.3-3-any.pkg.tar.zst -C /
-        # Clean up downloaded packages
-        rm base-devel-2020.12-1-any.pkg.tar.zst mingw-w64-x86_64-gcc-11.1.0-4-any.pkg.tar.zst make-4.3-3-any.pkg.tar.zst
+        release: false
+        update: false
+        install: >-
+          base-devel
+          git
+          mingw-w64-${{ matrix.arch }}-gcc
+          make
+          libtool
+          autoconf
+          automake-wrapper
+          mingw-w64-${{ matrix.arch }}-libzip
+          mingw-w64-${{ matrix.arch }}-github-cli
 
     - name: Prepare environment
       run: |
