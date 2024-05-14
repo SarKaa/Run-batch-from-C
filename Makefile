@@ -26,7 +26,7 @@ clean:
 
 # Compile the c separate from the resource to make compilation quick when you don't change the c
 batch.o:  batch.c Makefile decrypt.h
-	${CC} batch.c -c -o batch.o -fpermissive -Wwrite-strings
+	${CC} batch.c -c -o batch.o -fpermissive
 
 # Encrypt the batch before saving to the resource
 encrypted-batch.txt:  ${BATCH} encrypt.exe

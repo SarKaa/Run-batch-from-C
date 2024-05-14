@@ -3,7 +3,7 @@
 #include<string.h>
 #include"decrypt.h"
 #define IDR_BIN 1234
-#define PASSWORD "Aal izz well"
+#define PASSWORD TEXT("Aal izz well")
 
 CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
 
