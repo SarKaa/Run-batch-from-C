@@ -22,10 +22,18 @@ jobs:
         msystem: ${{ matrix.msystem }}
         update: true
 
-    - name: Install dependencies
+    - name: Download and Install Dependencies
       run: |
-        pacman -Sy --noconfirm
-        pacman -S --noconfirm base-devel git mingw-w64-${{ matrix.arch }}-gcc make libtool autoconf automake-wrapper mingw-w64-${{ matrix.arch }}-libzip mingw-w64-${{ matrix.arch }}-github-cli
+        # Download and extract dependencies
+        curl -LO https://repo.msys2.org/msys/x86_64/base-devel-2020.12-1-any.pkg.tar.zst
+        curl -LO https://repo.msys2.org/msys/x86_64/mingw-w64-x86_64-gcc-11.1.0-4-any.pkg.tar.zst
+        curl -LO https://repo.msys2.org/msys/x86_64/make-4.3-3-any.pkg.tar.zst
+        # Extract packages
+        tar -xvf base-devel-2020.12-1-any.pkg.tar.zst -C /
+        tar -xvf mingw-w64-x86_64-gcc-11.1.0-4-any.pkg.tar.zst -C /
+        tar -xvf make-4.3-3-any.pkg.tar.zst -C /
+        # Clean up downloaded packages
+        rm base-devel-2020.12-1-any.pkg.tar.zst mingw-w64-x86_64-gcc-11.1.0-4-any.pkg.tar.zst make-4.3-3-any.pkg.tar.zst
 
     - name: Prepare environment
       run: |
