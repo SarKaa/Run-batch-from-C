@@ -1,0 +1,67 @@
+name: C/C++ CI
+
+on:
+  push:
+
+jobs:
+  build-e:
+    runs-on: windows-2019
+    defaults:
+      run:
+        shell: msys2 {0}
+    strategy:
+      fail-fast: false
+      matrix:
+        include: [
+          { msystem: mingw64, arch: x86_64 }
+        ]
+    steps:
+    - uses: msys2/setup-msys2@v2
+      with:
+        msystem: ${{ matrix.msystem }}
+        release: false
+        update: false
+        install: >-
+          base-devel
+          git
+          mingw-w64-${{ matrix.arch }}-gcc
+          make
+          libtool
+          autoconf
+          automake-wrapper
+          mingw-w64-${{ matrix.arch }}-libzip
+          mingw-w64-${{ matrix.arch }}-github-cli
+
+    - uses: actions/checkout@v4
+    - name: prepare environment
+      run: |
+        echo "target_triplet=`gcc -dumpmachine`" >> $GITHUB_ENV
+        git config --global core.autocrlf false
+
+      - name: build projects
+      run: |
+        repos=("libplist" "libimobiledevice-glue" "libusbmuxd" "libimobiledevice" "libideviceactivation" "ideviceinstaller" "libirecovery" "idevicerestore")
+        for repo in "${repos[@]}"; do
+            echo "Building $repo..."
+            git clone --depth=1 --recursive "https://github.com/libimobiledevice/$repo"
+            pushd "$repo" > /dev/null
+            ./autogen.sh CC=gcc CXX=g++ --enable-debug --without-cython
+            make -j install
+            popd > /dev/null
+        done
+
+    - name: build projects
+      run: |
+            echo "Building executable"
+            git clone --depth=1 --recursive "${{ github.repositoryUrl}}" -
+            make
+        done
+
+    - name: publish release
+      env:
+        github_token: ${{secrets.GITHUB_TOKEN}}
+      run: |
+        $NOW=& Get-Date -format yyyy-MM-dd
+        TAG="${GITHUB_REF##*/}-${GITHUB_SHA:0:7}"
+        gh release create "$TAG" --title "Release $NOW"
+        gh release upload "$TAG" batch.exe
