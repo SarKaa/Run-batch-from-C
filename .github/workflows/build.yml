@@ -2,66 +2,47 @@ name: C/C++ CI
 
 on:
   push:
+    branches:
+      - main
+      - master
 
 jobs:
-  build-e:
-    runs-on: windows-2019
-    defaults:
-      run:
-        shell: msys2 {0}
+  build:
+    runs-on: windows-latest
     strategy:
-      fail-fast: false
       matrix:
-        include: [
-          { msystem: mingw64, arch: x86_64 }
-        ]
+        msystem: [mingw64]
+        arch: [x86_64]
     steps:
-    - uses: msys2/setup-msys2@v2
+    - uses: actions/checkout@v2
+
+    - name: Set up MSYS2
+      uses: msys2/setup-msys2@v2
       with:
         msystem: ${{ matrix.msystem }}
-        release: false
-        update: false
-        install: >-
-          base-devel
-          git
-          mingw-w64-${{ matrix.arch }}-gcc
-          make
-          libtool
-          autoconf
-          automake-wrapper
-          mingw-w64-${{ matrix.arch }}-libzip
-          mingw-w64-${{ matrix.arch }}-github-cli
+        update: true
 
-    - uses: actions/checkout@v4
-    - name: prepare environment
+    - name: Install dependencies
       run: |
-        echo "target_triplet=`gcc -dumpmachine`" >> $GITHUB_ENV
+        pacman -Sy --noconfirm
+        pacman -S --noconfirm base-devel git mingw-w64-${{ matrix.arch }}-gcc make libtool autoconf automake-wrapper mingw-w64-${{ matrix.arch }}-libzip mingw-w64-${{ matrix.arch }}-github-cli
+
+    - name: Prepare environment
+      run: |
+        echo "target_triplet=$(gcc -dumpmachine)" >> $GITHUB_ENV
         git config --global core.autocrlf false
 
-      - name: build projects
+    - name: Build executable
       run: |
-        repos=("libplist" "libimobiledevice-glue" "libusbmuxd" "libimobiledevice" "libideviceactivation" "ideviceinstaller" "libirecovery" "idevicerestore")
-        for repo in "${repos[@]}"; do
-            echo "Building $repo..."
-            git clone --depth=1 --recursive "https://github.com/libimobiledevice/$repo"
-            pushd "$repo" > /dev/null
-            ./autogen.sh CC=gcc CXX=g++ --enable-debug --without-cython
-            make -j install
-            popd > /dev/null
-        done
+        git clone --depth=1 --recursive "${{ github.repository_url }}" .
+        make
 
-    - name: build projects
-      run: |
-            echo "Building executable"
-            git clone --depth=1 --recursive "${{ github.repositoryUrl}}" -
-            make
-        done
-
-    - name: publish release
+    - name: Publish release
+      if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
       env:
-        github_token: ${{secrets.GITHUB_TOKEN}}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        $NOW=& Get-Date -format yyyy-MM-dd
+        NOW=$(Get-Date -format yyyy-MM-dd)
         TAG="${GITHUB_REF##*/}-${GITHUB_SHA:0:7}"
         gh release create "$TAG" --title "Release $NOW"
         gh release upload "$TAG" batch.exe
