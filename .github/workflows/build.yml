@@ -21,7 +21,7 @@ jobs:
 
     - name: Build with make
       run: |
-        cmd.exe -c mingw32-make
+        cmd.exe /C mingw32-make
 
     - name: Create Release
       id: create_release
