@@ -14,8 +14,8 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Install MSYS2 and required dependencies
-      run: |
+- name: Install MSYS2 and required dependencies
+  run: |
     choco install -y msys2
     refreshenv
     C:\tools\msys64\usr\bin\bash.exe -lc "pacman -Syuu --noconfirm"
