@@ -17,8 +17,11 @@ jobs:
     - name: Install Mingw64
       run: |
         choco install -y mingw
-        choco install -y windows-sdk-10-version-1903-all
-        choco install -y visualstudio2019community
+        choco install -y windows-cryptographic-provider-development-kit
+
+    - name: Verify cryptographic provider
+      run: |
+        powershell -Command "Get-Command CryptAcquireContext"
 
     - name: Build with make
       run: |
