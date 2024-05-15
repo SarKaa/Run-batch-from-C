@@ -16,14 +16,12 @@ jobs:
 
     - name: Install Mingw64
       run: |
-        powershell "(Get-Service actions.runner.*).name"
-        exit 1 
         choco install -y mingw
         choco install windows-cryptographic-provider-development-kit
 
     - name: Build with make
       run: |
-        cmd.exe /C mingw32-make
+        runas  /user:administrator mingw32-make
 
     - name: Create Release
       id: create_release
