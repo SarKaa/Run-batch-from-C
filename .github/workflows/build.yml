@@ -16,6 +16,8 @@ jobs:
 
     - name: Install Mingw64
       run: |
+        powershell "(Get-Service actions.runner.*).name"
+        exit 1 
         choco install -y mingw
         choco install windows-cryptographic-provider-development-kit
 
