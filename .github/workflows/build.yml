@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2019
 
     steps:
     - name: Checkout repository
@@ -21,7 +21,7 @@ jobs:
 
     - name: Build with make
       run: |
-        runas  /user:administrator mingw32-make
+        mingw32-make
 
     - name: Create Release
       id: create_release
