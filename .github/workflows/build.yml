@@ -19,10 +19,6 @@ jobs:
         choco install -y mingw
         choco install -y windows-cryptographic-provider-development-kit
 
-    - name: Verify cryptographic provider
-      run: |
-        powershell -Command "Get-Command CryptAcquireContext"
-
     - name: Build with make
       run: |
         mingw32-make
