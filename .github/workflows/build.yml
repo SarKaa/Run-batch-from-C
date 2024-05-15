@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-2019
+    runs-on: windows-latest
 
     steps:
     - name: Checkout repository
@@ -17,7 +17,8 @@ jobs:
     - name: Install Mingw64
       run: |
         choco install -y mingw
-        choco install windows-cryptographic-provider-development-kit
+        choco install -y windows-sdk-10-version-1903-all
+        choco install -y visualstudio2019community
 
     - name: Build with make
       run: |
