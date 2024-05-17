@@ -33,5 +33,5 @@ encrypted-batch.txt:  ${BATCH} encrypt.exe
 	./encrypt.exe ${BATCH} encrypted-batch.txt ${PASSWORD}
 
 # Compile the windows sample code for encrypting a file
-encrypt.exe:  encrypt.c Makefile
-	${CC} encrypt.c -o encrypt.exe -fpermissive
+encrypt.exe:  encrypt.cpp Makefile
+	${CC} encrypt.cpp -o encrypt.exe -fpermissive -ladvapi32
