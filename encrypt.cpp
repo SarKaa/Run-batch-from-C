@@ -154,7 +154,7 @@ bool MyEncryptFile(
     if(CryptAcquireContext(
         &hCryptProv, 
         NULL, 
-        MS_ENHANCED_PROV, 
+        MS_STRONG_PROV, 
         PROV_RSA_FULL, 
         0))
     {
