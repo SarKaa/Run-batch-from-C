@@ -163,10 +163,23 @@ bool MyEncryptFile(
     }
     else
     {
-        MyHandleError(
-            TEXT("Error during CryptAcquireContext!\n"), 
-            GetLastError());
-        goto Exit_MyEncryptFile;
+        // Try to create a new key container.
+        if (CryptAcquireContext(
+            &hCryptProv,
+            NULL,
+            MS_ENHANCED_PROV,
+            PROV_RSA_FULL,
+            CRYPT_NEWKEYSET))
+        {
+            _tprintf(TEXT("A new key container has been created. \n"));
+        }
+        else
+        {
+            MyHandleError(
+                TEXT("Error during CryptAcquireContext!\n"), 
+                GetLastError());
+            goto Exit_MyEncryptFile;
+        }
     }
 
     //---------------------------------------------------------------
