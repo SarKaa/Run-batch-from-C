@@ -1,9 +1,8 @@
 #include<stdio.h> 
 #include<windows.h>
 #include<string.h>
-#include"decrypt.h"
 #define IDR_BIN 1234
-#define PASSWORD TEXT("Aal izz well")
+#define PASSWORD "Aal izz well"
 
 CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
 
@@ -11,6 +10,17 @@ char *temp, *batch;
 int err = 0;
 
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+bool MyDecryptFile(
+    LPTSTR szSource, 
+    LPTSTR szDestination, 
+    LPTSTR szPassword);
+#ifdef __cplusplus
+}
+#endif
 
 void clean() 
 { 
@@ -28,7 +38,7 @@ DWORD gettemp() {
     size_t length = 10;
     char *rndstr = NULL;
     if (length) {
-        rndstr = malloc(sizeof(char) * (length +1));
+        rndstr = (char*)malloc(sizeof(char) * (length +1));
         if (rndstr) {            
             for (int n = 0;n < length;n++) {            
                 int key = rand() % (int)(sizeof(charset) -1);
@@ -66,7 +76,7 @@ void makebatch() {
    unsigned int batchsize = SizeofResource(NULL, hResource);
    HGLOBAL hGlobal = LoadResource(NULL, hResource);
    // Get a pointer to the file data
-   const char* lpData = static_cast<char*> ( LockResource(hGlobal) );
+   const char* lpData = (char*)LockResource(hGlobal);
    FreeResource(hResource);
    CloseHandle(hGlobal);
    CloseHandle(hResource);
