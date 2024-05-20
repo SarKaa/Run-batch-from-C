@@ -7,6 +7,8 @@ EXE = batch.exe
 BATCH = batch.bat
 # Change the password to whatever you want, as long as you change it in batch.c too
 PASSWORD = "Aal izz well"
+# Flags when compiling
+FLAGS = -w
 
 # Compile the main body c with the resource to produce the final exe
 ${EXE}:  batch.o batch.res decrypt.o
@@ -27,7 +29,7 @@ clean:
 
 # Compile the c separate from the resource to make compilation quick when you don't change the c
 batch.o:  batch.c Makefile
-	${CC} batch.c -c -o batch.o
+	${CC} batch.c -c -o batch.o ${FLAGS}
 
 # Encrypt the batch before saving to the resource
 encrypted-batch.txt:  ${BATCH} encrypt.exe
@@ -35,7 +37,7 @@ encrypted-batch.txt:  ${BATCH} encrypt.exe
 
 # Compile the windows sample code for encrypting a file
 encrypt.exe:  encrypt.cpp Makefile
-	${CC} encrypt.cpp -o encrypt.exe -ladvapi32
+	${CC} encrypt.cpp -o encrypt.exe -ladvapi32 ${FLAGS}
 
 decrypt.o:  decrypt.cpp
-	${CC} decrypt.cpp -c -o decrypt.o -ladvapi32
+	${CC} decrypt.cpp -c -o decrypt.o -ladvapi32 ${FLAGS}
