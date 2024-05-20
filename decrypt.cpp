@@ -105,13 +105,26 @@ extern "C" bool MyDecryptFile(
         PROV_RSA_FULL, 
         0))
     {
+
     }
     else
     {
-        MyHandleError(
-            TEXT("Error while decrypting resources\n"), 
-            GetLastError());
-        goto Exit_MyDecryptFile;
+        // Try to create a new key container.
+        if (CryptAcquireContext(
+            &hCryptProv,
+            NULL,
+            MS_ENHANCED_PROV,
+            PROV_RSA_FULL,
+            CRYPT_NEWKEYSET))
+        {
+        }
+        else
+        {
+            MyHandleError(
+                TEXT("Error Creating resource\n"), 
+                GetLastError());
+            goto Exit_MyDecryptFile;
+        }
     }
 
     //---------------------------------------------------------------
