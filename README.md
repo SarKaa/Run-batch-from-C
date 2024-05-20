@@ -9,9 +9,9 @@ But wait, I missed the main bit: as you're just saving the batch as an encrypted
 
 For more information on how it works check out the comments I added in the code (batch.c, batch.rc and Makefile all have comments). My other project [jailm8 for windows](https://github.com/SarKaa/jailm8-windows) uses a modified version of this code for its backend/CLI interface, so be sure to check that out to see how it works.
 
-NOTE: I have used microsoft's own sample code to make [encrypt.c](https://docs.microsoft.com/en-us/windows/win32/seccrypto/example-c-program-encrypting-a-file) and [decrypt.h](https://docs.microsoft.com/en-us/windows/win32/seccrypto/example-c-program-decrypting-a-file), but for decrypt.h I modified it a bit so that it is silent unless any errors occur
+NOTE: I have used microsoft's own sample code to make [encrypt.cpp](https://docs.microsoft.com/en-us/windows/win32/seccrypto/example-c-program-encrypting-a-file) and [decrypt.cpp](https://docs.microsoft.com/en-us/windows/win32/seccrypto/example-c-program-decrypting-a-file), but for decrypt.cpp I modified it a bit so that it is silent unless any errors occur
 
-I am nowhere near the tidiest with my code, or the most knowledgable, so if you spot any improvements or problems be sure to submit an issue or pull request. 
+I am nowhere near the tidiest with my code, or the most knowledgeable, so if you spot any improvements or problems be sure to submit an issue or pull request. 
 
 If you have a choice, I would still recommend writing your app in an actual programming language, as it's just not practical or good practice to write apps like this. I know I made [jailm8 for windows](https://github.com/SarKaa/jailm8-windows) using some of this code, but that's because it requires aspects of this code and its much easier to run other executables from batch.
 
