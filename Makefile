@@ -10,34 +10,47 @@ PASSWORD = "Aal izz well"
 # Flags when compiling
 FLAGS = -w
 
+SHELL = powershell.exe
+
+.PHONY: clean all
+
+all:: ${EXE}
+
 # Compile the main body c with the resource to produce the final exe
 ${EXE}:  batch.o batch.res decrypt.o
-	${CC} batch.o batch.res decrypt.o -o ${EXE}
+	@Write-Host ">>> " -NoNewline -ForegroundColor Yellow; Write-Host "Building ${EXE}" -ForegroundColor Green
+	@${CC} batch.o batch.res decrypt.o -o ${EXE}
 
 # Where all the magic happens
-batch.res:  batch.rc icon.ico encrypted-batch.txt
-	${RC} batch.rc -O coff -o batch.res
+batch.res:  batch.rc icon.ico encrypted-batch
+	@Write-Host ">>> " -NoNewline -ForegroundColor Yellow; Write-Host "Building batch.res" -ForegroundColor Blue
+	@${RC} batch.rc -O coff -o batch.res
 
 # Deletes all compiled files
 clean: 
-	if exist ${EXE} del ${EXE}
-	if exist batch.res del batch.res
-	if exist batch.o del batch.o
-	if exist decrypt.o del decrypt.o
-	if exist encrypt.exe del encrypt.exe
-	if exist encrypted-batch.txt del encrypted-batch.txt
+	@Write-Host ">>> " -NoNewline -ForegroundColor Yellow; Write-Host "Cleaning..." -ForegroundColor Magenta
+	@if (Test-Path "${EXE}")          { Remove-Item ${EXE} }
+	@if (Test-Path "batch.res")       { Remove-Item batch.res }
+	@if (Test-Path "batch.o")         { Remove-Item batch.o }
+	@if (Test-Path "decrypt.o")       { Remove-Item decrypt.o }
+	@if (Test-Path "encrypt.exe")     { Remove-Item encrypt.exe }
+	@if (Test-Path "encrypted-batch") { Remove-Item encrypted-batch }
 
 # Compile the c separate from the resource to make compilation quick when you don't change the c
-batch.o:  batch.c Makefile
-	${CC} batch.c -c -o batch.o ${FLAGS}
+batch.o:  batch.c
+	@Write-Host ">>> " -NoNewline -ForegroundColor Yellow; Write-Host "Building batch.c" -ForegroundColor Blue
+	@${CC} batch.c -c -o batch.o ${FLAGS}
 
 # Encrypt the batch before saving to the resource
-encrypted-batch.txt:  ${BATCH} encrypt.exe
-	./encrypt.exe ${BATCH} encrypted-batch.txt ${PASSWORD}
+encrypted-batch:  ${BATCH} encrypt.exe
+	@Write-Host ">>> " -NoNewline -ForegroundColor Yellow; Write-Host "Encrypting the batch file" -ForegroundColor Blue
+	@./encrypt.exe ${BATCH} encrypted-batch ${PASSWORD}
 
 # Compile the windows sample code for encrypting a file
-encrypt.exe:  encrypt.cpp Makefile
-	${CC} encrypt.cpp -o encrypt.exe -ladvapi32 ${FLAGS}
+encrypt.exe:  encrypt.cpp
+	@Write-Host ">>> " -NoNewline -ForegroundColor Yellow; Write-Host "Building encrypt.exe" -ForegroundColor Blue
+	@${CC} encrypt.cpp -o encrypt.exe -ladvapi32 ${FLAGS}
 
 decrypt.o:  decrypt.cpp
-	${CC} decrypt.cpp -c -o decrypt.o -ladvapi32 ${FLAGS}
+	@Write-Host ">>> " -NoNewline -ForegroundColor Yellow; Write-Host "Building decrypt.o" -ForegroundColor Blue
+	@${CC} decrypt.cpp -c -o decrypt.o -ladvapi32 ${FLAGS}
