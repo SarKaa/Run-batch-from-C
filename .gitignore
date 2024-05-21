@@ -1,0 +1,4 @@
+*.exe
+*.o
+*.res
+encrypted-batch
