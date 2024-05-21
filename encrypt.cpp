@@ -34,7 +34,7 @@ int _tmain(int argc, _TCHAR* argv[])
             TEXT("<destination file> | <password>\n"));
         _tprintf(TEXT("<password> is optional.\n"));
         _tprintf(TEXT("Press any key to exit."));
-        _gettch();
+        _getch();
         return 1;
     }
 
