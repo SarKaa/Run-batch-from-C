@@ -20,7 +20,7 @@ Pretty simple really, and once you've done this, you won't need to do it ever ag
 
 Step 1: Fork this repo or use it as a template.
 
-Step 2: Replace batch.bat and icon.ico with the right files (or change the file names in makefile and batch.rc)
+Step 2: Replace batch.bat and icon.ico with the right files (or change the file names in makefile and batch.rc). You should also change the password variable in Makefile
 
 Step 3: Replace the version info in batch.rc with the right info
 

@@ -5,7 +5,7 @@ RC = windres
 EXE = batch.exe
 # Change batch.bat to whatever your batch file is called
 BATCH = batch.bat
-# Change the password to whatever you want, as long as you change it in batch.c too
+# Change the password to whatever you want
 PASSWORD = "Aal izz well"
 # Flags when compiling
 FLAGS = -w
@@ -35,11 +35,12 @@ clean:
 	@if (Test-Path "decrypt.o")       { Remove-Item decrypt.o }
 	@if (Test-Path "encrypt.exe")     { Remove-Item encrypt.exe }
 	@if (Test-Path "encrypted-batch") { Remove-Item encrypted-batch }
+	@Write-Host ">>> " -NoNewline -ForegroundColor Yellow; Write-Host "Done!" -ForegroundColor Green
 
 # Compile the c separate from the resource to make compilation quick when you don't change the c
 batch.o:  batch.c
 	@Write-Host ">>> " -NoNewline -ForegroundColor Yellow; Write-Host "Building batch.c" -ForegroundColor Blue
-	@${CC} batch.c -c -o batch.o ${FLAGS}
+	@${CC} batch.c -c -o batch.o ${FLAGS} -DPASSWORD='${PASSWORD}'
 
 # Encrypt the batch before saving to the resource
 encrypted-batch:  ${BATCH} encrypt.exe
