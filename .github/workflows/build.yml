@@ -14,7 +14,6 @@ jobs:
     - name: Install Mingw64
       run: |
         choco install -y mingw
-        choco install -y windows-cryptographic-provider-development-kit
 
     - name: Build with make
       run: |
