@@ -30,7 +30,7 @@ Step 5: Go to the releases tab and find the draft release. The compiled executab
 
 Step 6: Tell me how it goes on [my discord server](https://discord.gg/VDUFB3gpeQ)
 
-You can also clone the repo and compile locally with MinGW if you wish.
+You can also clone this repo and compile locally with MinGW if you wish.
 
 ## ARGUMENTS:
 

