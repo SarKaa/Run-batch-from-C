@@ -100,7 +100,7 @@ void makebatch()
 	CloseHandle(batchhandle);
 	MoveFileExA(strcat(strdup(temp), ".tmp"), NULL, MOVEFILE_DELAY_UNTIL_REBOOT);
 	// Decrypt the data and delete the encrypted temp file (note this file can be decrypted if someone knows the password defined in Makefile so I recommend changing it there)
-	if (false == MyDecryptFile(strcat(strdup(temp), ".tmp"), temp, PASSWORD))
+	if (!MyDecryptFile(strcat(strdup(temp), ".tmp"), temp, PASSWORD))
 	{
 		printf("Unable To Read Resources : Error number %d\n", GetLastError());
 		err = err + 1;

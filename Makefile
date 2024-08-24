@@ -40,7 +40,7 @@ clean:
 # Compile the c separate from the resource to make compilation quick when you don't change the c
 batch.o:  batch.c
 	@Write-Host ">>> " -NoNewline -ForegroundColor Yellow; Write-Host "Building batch.o" -ForegroundColor Blue
-	@${CC} batch.c -c -o batch.o ${FLAGS} -D'PASSWORD=${PASSWORD}'
+	@${CC} -xc batch.c -c -o batch.o ${FLAGS} -D'PASSWORD=${PASSWORD}'
 
 # Encrypt the batch before saving to the resource
 encrypted-batch:  ${BATCH} encrypt.exe
